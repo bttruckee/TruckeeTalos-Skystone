@@ -29,10 +29,11 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import 4com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -57,6 +58,9 @@ public class chickenNugget extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftMotor = null;
     private DcMotor rightMotor = null;
+    Servo snowPlow = null;
+    Servo paddle = null;
+    Servo dumper = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -70,11 +74,17 @@ public class chickenNugget extends OpMode
         // step (using the FTC Robot Controller app on the phone).
         leftMotor  = hardwareMap.get(DcMotor.class, "left_drive");
         rightMotor = hardwareMap.get(DcMotor.class, "right_drive");
+        snowPlow = hardwareMap.servo.get("snowPlow");
+        paddle = hardwareMap.servo.get("paddle");
+        dumper = hardwareMap.servo.get("dumper");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         leftMotor.setDirection(DcMotor.Direction.FORWARD);
         rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        snowPlow.setPosition(0);
+        paddle.setPosition(0);
+        dumper.setPosition(0);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -109,10 +119,10 @@ public class chickenNugget extends OpMode
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double drive = -gamepad1.left_stick_y;
-        double turn  =  gamepad1.right_stick_x;
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+        double drive = gamepad1.left_stick_y;
+        double turn  = -gamepad1.right_stick_x;
+        leftPower    = Range.clip(drive + turn, -.5, .5) ;
+        rightPower   = Range.clip(drive - turn, -.5, .5) ;
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
@@ -122,6 +132,28 @@ public class chickenNugget extends OpMode
         // Send calculated power to wheels
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
+
+        //servos
+        if(gamepad1.a) {
+            snowPlow.setPosition(1);
+        }
+        else if (gamepad1.b)  {
+            snowPlow.setPosition(0);
+        }
+
+        if(gamepad1.x) {
+            paddle.setPosition(1);
+        }
+        else if (gamepad1.y)  {
+            paddle.setPosition(0);
+        }
+
+        if(gamepad1.left_bumper) {
+            dumper.setPosition(1);
+        }
+        else if (gamepad1.right_bumper )  {
+            dumper.setPosition(0);
+        }
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
