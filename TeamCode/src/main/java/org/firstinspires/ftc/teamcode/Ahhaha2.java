@@ -23,8 +23,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by colethompson on 10/27/17.
  */
 
-@Autonomous(name="Ahhaha")
-public class Ahhaha extends LinearOpMode {
+@Autonomous(name="Ahhaha2")
+public class Ahhaha2 extends LinearOpMode {
     DcMotor leftMotor = null;
     DcMotor rightMotor = null;
     //DcMotor leftMotorBack = null;
@@ -33,7 +33,7 @@ public class Ahhaha extends LinearOpMode {
     //DcMotor armMotor = null;
 
     Servo armServo1 =null;
-    //Servo armServo2 = null;
+    Servo armServo2 = null;
     //Sensor color = null;
 
     @Override
@@ -47,13 +47,13 @@ public class Ahhaha extends LinearOpMode {
         //glyphMotor = hardwareMap.dcMotor.get("glyphMotor");
         //armMotor = hardwareMap.dcMotor.get("armMotor");
         armServo1 = hardwareMap.servo.get("armServo1");
-        //armServo2 = hardwareMap.servo.get("armServo2");
+        armServo2 = hardwareMap.servo.get("armServo2");
         //armMotor.setPower(0);
         //armServo1.setPosition(0);
         //armServo2.setPosition(0);
         waitForStart();
 
-        //armServo2.setPosition(1);
+        armServo2.setPosition(1);
         //armMotor.setPower(-1);
         /*Thread.sleep(3700);
         //armMotor.setPower(0);
@@ -71,35 +71,32 @@ public class Ahhaha extends LinearOpMode {
         Thread.sleep(1000);
          */
 
-        //position to get block
+        //position to platform
         Thread.sleep(3700);
         DriveForward(0);
         Thread.sleep(1000);
-        turnRight(.5);
+        turnLeft(.5);
         Thread.sleep(1000);
         DriveForward(0);
         Thread.sleep(1000);
         turnLeft(.5);
         Thread.sleep(1000);
-        DriveForward(0);
-        Thread.sleep(1000);
-
-        //pick up block
-        armServo1.setPosition(0);
-        Thread.sleep(1000);
-        turnLeft(.5);
-        Thread.sleep(1000);
-        DriveForward(0);
-        Thread.sleep(1000);
-        turnRight(.5);
-        Thread.sleep(1000);
-        DriveForward(0);
-        Thread.sleep(1000);
-        armServo1.setPosition(-1);
-
-        //park over center line
+        armServo2.setPosition(0);
         Thread.sleep(1000);
         DriveBackwards(0);
+        Thread.sleep(1000);
+        armServo2.setPosition(-1);
+        Thread.sleep(1000);
+
+        //move to building site
+        DriveForward(0);
+        Thread.sleep(1000);
+
+        //move over line
+        turnLeft(.5);
+        Thread.sleep(1000);
+        DriveForward(0);
+
 
     }
 

@@ -58,7 +58,7 @@ public class chickenNugget extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftMotor = null;
     private DcMotor rightMotor = null;
-    Servo snowPlow = null;
+    //Servo snowPlow = null;
     Servo paddle = null;
     Servo dumper = null;
 
@@ -74,7 +74,7 @@ public class chickenNugget extends OpMode
         // step (using the FTC Robot Controller app on the phone).
         leftMotor  = hardwareMap.get(DcMotor.class, "left_drive");
         rightMotor = hardwareMap.get(DcMotor.class, "right_drive");
-        snowPlow = hardwareMap.servo.get("snowPlow");
+        //snowPlow = hardwareMap.servo.get("snowPlow");
         paddle = hardwareMap.servo.get("paddle");
         dumper = hardwareMap.servo.get("dumper");
 
@@ -82,7 +82,7 @@ public class chickenNugget extends OpMode
         // Reverse the motor that runs backwards when connected directly to the battery
         leftMotor.setDirection(DcMotor.Direction.FORWARD);
         rightMotor.setDirection(DcMotor.Direction.REVERSE);
-        snowPlow.setPosition(0);
+        //snowPlow.setPosition(0);
         paddle.setPosition(0);
         dumper.setPosition(0);
 
@@ -133,13 +133,14 @@ public class chickenNugget extends OpMode
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
 
-        //servos
+        /*servos
         if(gamepad1.a) {
             snowPlow.setPosition(1);
         }
         else if (gamepad1.b)  {
             snowPlow.setPosition(0);
         }
+        */
 
         if(gamepad1.x) {
             paddle.setPosition(1);
